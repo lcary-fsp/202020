@@ -77,12 +77,24 @@ func idleSeconds() -> Double {
     CGEventSource.secondsSinceLastEventType(.combinedSessionState, eventType: CGEventType(rawValue: ~0)!)
 }
 
-func notify() {
+let soundName = "Pop"  // any name from /System/Library/Sounds or ~/Library/Sounds
+
+func run(_ path: String, _ args: [String]) {
     let p = Process()
-    p.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
-    p.arguments = ["-e", "display notification \"Look at something 20 feet away for 20 seconds.\" with title \"Look away\" sound name \"Glass\""]
+    p.executableURL = URL(fileURLWithPath: path)
+    p.arguments = args
     try? p.run()
     p.waitUntilExit()
+}
+
+func notify() {
+    // Notification is silent; play the sound directly so it doesn't depend on
+    // Notification Center sound settings.
+    run("/usr/bin/osascript", ["-e", "display notification \"Look at something 20 feet away for 20 seconds.\" with title \"Look away\""])
+    let user = NSHomeDirectory() + "/Library/Sounds/\(soundName).aiff"
+    let system = "/System/Library/Sounds/\(soundName).aiff"
+    let sound = FileManager.default.fileExists(atPath: user) ? user : system
+    run("/usr/bin/afplay", [sound])
 }
 
 let mic = micInUse()

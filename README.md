@@ -9,7 +9,7 @@ A small 20-20-20 reminder for macOS. Every 20 minutes it shows a native notifica
 1. Checks whether any microphone is in use (CoreAudio) and stops if so.
 2. Checks whether any camera is in use (CoreMediaIO) and stops if so.
 3. Checks how long since the last keyboard or mouse input and stops if it's been more than 5 minutes.
-4. Otherwise shows a notification through `osascript`.
+4. Otherwise shows a silent notification through `osascript` and plays the sound with `afplay`.
 
 It only uses Apple frameworks. There's no third-party code and nothing runs between checks.
 
@@ -37,7 +37,8 @@ osascript -e 'display notification "test" with title "Look away"'  # test notifi
 |---|---|---|
 | How often it checks (`INTERVAL`) | `install.sh` | 1200 seconds |
 | Idle time before it skips (`idleLimitSeconds`) | `lookaway.swift` | 300 seconds |
-| Notification text and sound | `notify()` in `lookaway.swift` | "Glass" |
+| Sound (`soundName`) | `lookaway.swift` | "Pop" |
+| Notification text | `notify()` in `lookaway.swift` | |
 
 Run `./install.sh` again after any change.
 

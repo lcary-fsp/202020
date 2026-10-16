@@ -2,6 +2,8 @@
 
 A small 20-20-20 reminder for macOS. Every 20 minutes it shows a native notification telling you to look at something 20 feet away for 20 seconds. It stays quiet while you're on a call or away from the computer.
 
+<img src="docs/notification.png" width="373" alt="Look away notification">
+
 ## How it works
 
 `lookaway.swift` compiles to one binary, and launchd runs it every 20 minutes. Each time it runs, it:
